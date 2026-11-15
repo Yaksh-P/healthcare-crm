@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Healthcare CRM</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script defer src="/static/dashboard.js"></script>
+</head>
+<body>
+  <header><strong>Healthcare CRM</strong><a href="/docs">API documentation</a></header>
+  <main>
+    <h1>Clinic dashboard</h1>
+    <p class="intro">Manage fictional patient records and clinician appointments.</p>
+    <p id="message" role="status"></p>
+    <div class="forms">
+      <section>
+        <h2>Add patient</h2>
+        <form id="patient">
+          <label>Full name<input name="name" required maxlength="100"></label>
+          <label>Email (optional)<input name="email" type="email" maxlength="254"></label>
+          <button>Add patient</button>
+        </form>
+      </section>
+      <section>
+        <h2>Book appointment</h2>
+        <form id="booking">
+          <div class="fields">
+            <label>Patient<select name="patient_id" required></select></label>
+            <label>Clinician<select name="staff_id" required></select></label>
+            <label>Starts (local time)<input type="datetime-local" name="starts_at" required></label>
+            <label>Duration<select name="duration"><option value="30">30 minutes</option><option value="15">15 minutes</option><option value="60">60 minutes</option></select></label>
+          </div>
+          <button>Book appointment</button>
+        </form>
+      </section>
+    </div>
+    <section class="schedule">
+      <h2>Appointments</h2>
+      <p id="empty" hidden>No appointments scheduled yet.</p>
+      <div class="table-wrap">
+        <table id="schedule" hidden>
+          <thead><tr><th>Patient</th><th>Clinician</th><th>Starts</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

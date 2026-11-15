@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: crm
+      POSTGRES_USER: crm
+      POSTGRES_PASSWORD: local-demo
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - records:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U crm -d crm"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://crm:local-demo@db/crm
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8000:8000"
+volumes:
+  records:
